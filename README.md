@@ -34,28 +34,30 @@ Python 3.8 ou superior.
 
 Bibliotecas Python:
 
-bash
-Copy
+```
 pip install pandas beautifulsoup4 selenium geopandas matplotlib seaborn
+```
 WebDriver do Chrome: Baixe o ChromeDriver compatível com sua versão do Chrome.
 
 # Instalação e Configuração
 Clone este repositório:
 
-bash
-Copy
+```
 git clone https://github.com/seu-usuario/projeto-criminalidade.git
 cd projeto-criminalidade
+```
 Instale as dependências:
 
-bash
-Copy
+```
 pip install -r requirements.txt
+```
 Configure o caminho do ChromeDriver no código:
 
+```
 python
-Copy
 DRIVER_PATH = '/caminho/do/seu/chromedriver'
+```
+
 # Como Usar
 Coleta de Dados:
 
@@ -63,9 +65,10 @@ Substitua a URL no código pela fonte de dados desejada (ex: site do Fórum Bras
 
 Execute o script de scraping:
 
-bash
-Copy
+```
 python main.py
+```
+
 Caso o site bloqueie scraping, use dados mockados para testes.
 
 # Análise e Visualização:
@@ -145,10 +148,10 @@ Comente o código e documente cada etapa.
 
 Utilize funções e classes para modularizar o projeto.
 
-Licença
+## Licença
 Este projeto está licenciado sob a MIT License. Sinta-se à vontade para usar, modificar e distribuir o código.
 
-Dúvidas?
+## Dúvidas?
 Abra uma issue no GitHub ou entre em contato pelo LinkedIn. Vamos construir soluções incríveis juntos! 🚀
 
 #Python #DataScience #SegurançaPública #Inovação
