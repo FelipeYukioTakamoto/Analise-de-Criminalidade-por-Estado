@@ -1,4 +1,4 @@
-# An-lise-de-Criminalidade-por-Estado
+# Analise-de-Criminalidade-por-Estado
 
 Projeto: Análise de Criminalidade por Estado no Brasil
 Este projeto tem como objetivo coletar, processar e visualizar dados de criminalidade por estado no Brasil, utilizando técnicas de web scraping, análise de dados e visualização geográfica. O código foi desenvolvido em Python e pode ser adaptado para outras análises de dados públicos.
