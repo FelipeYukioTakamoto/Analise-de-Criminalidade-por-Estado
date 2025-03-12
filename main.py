@@ -1,52 +1,40 @@
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-import time
-import geopandas as gpd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import geopandas as gpd
 
-# --- Configuração inicial (substitua com seus valores) ---
-DRIVER_PATH = '/caminho/do/seu/chromedriver'  # Necessário para sites com JavaScript
-ESTADOS_BRASIL = ['SP', 'RJ', 'MG', 'RS', 'PR', 'SC', 'BA', 'PE', 'CE', 'DF']  # Lista completa de estados
+# --- Configuração inicial ---
+URL = 'https://www.ipea.gov.br/atlasviolencia/'  # Site oficial do Atlas da Violência
+DRIVER_PATH = 'C:\Users\yukio\Downloads\chromedriver_win32'  # Substitua pelo caminho do seu ChromeDriver
+SHAPEFILE_PATH = 'C:\Users\yukio\Downloads\BR_Pais_2023'  # shapefile do Brasil
 
-# --- Função de scraping (exemplo genérico) ---
+# --- Função de scraping ---
 def scrape_crime_data():
-    url = 'https://exemplo-site-gov.com/criminalidade'  # Substituir por fonte real
+    # Requisição ao site
+    response = requests.get(URL)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Exemplo de extração de dados (ajuste os seletores conforme o site)
+    tabela = soup.find('table', {'class': 'tabela-dados'})  # Substitua pela classe correta
     dados_estados = []
 
-    # Opção 1: Site estático (BeautifulSoup)
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    
-    # Exemplo de extração (ajuste os seletores):
-    tabela = soup.find('table', {'class': 'dados-crime'})
-    for linha in tabela.find_all('tr')[1:]:  # Pular cabeçalho
-        celulas = linha.find_all('td')
-        estado = celulas[0].text.strip()
-        indice = float(celulas[1].text.replace(',', '.'))
-        dados_estados.append({'Estado': estado, 'Índice': indice})
-
-    # Opção 2: Site dinâmico (Selenium)
-    """
-    driver = webdriver.Chrome(executable_path=DRIVER_PATH)
-    driver.get(url)
-    time.sleep(3)  # Espera carregar JavaScript
-    
-    elementos = driver.find_elements(By.CSS_SELECTOR, '.classe-dos-dados')
-    for elemento in elementos:
-        # Processamento similar...
-    driver.quit()
-    """
+    if tabela:
+        for linha in tabela.find_all('tr')[1:]:  # Pular cabeçalho
+            celulas = linha.find_all('td')
+            estado = celulas[0].text.strip()
+            indice = float(celulas[1].text.replace(',', '.'))
+            dados_estados.append({'Estado': estado, 'Índice': indice})
+    else:
+        print("Tabela não encontrada. Verifique o seletor ou a estrutura do site.")
 
     return pd.DataFrame(dados_estados)
 
 # --- Execução e tratamento de dados ---
 # (Se o scraping real não for possível, use dados mockados para teste)
 dados_mockados = pd.DataFrame({
-    'Estado': ESTADOS_BRASIL,
+    'Estado': ['SP', 'RJ', 'MG', 'RS', 'PR', 'SC', 'BA', 'PE', 'CE', 'DF'],
     'Índice': [8.7, 9.4, 7.1, 6.5, 5.9, 4.3, 8.2, 7.8, 9.1, 6.7]  # Valores hipotéticos
 })
 
@@ -64,8 +52,8 @@ plt.ylabel('Índice por 100 mil habitantes')
 plt.show()
 
 # --- Mapa Brasil (requer shapefile) ---
-# Baixe shapefile do Brasil em: https://www.ibge.gov.br/geociencias/downloads-geociencias.html
-mapa_br = gpd.read_file('/caminho/BR_UF_2022.shp')
+# Baixe o shapefile do Brasil em: https://www.ibge.gov.br/geociencias/downloads-geociencias.html
+mapa_br = gpd.read_file(SHAPEFILE_PATH)
 mapa_br = mapa_br.merge(df, left_on='SIGLA_UF', right_on='Estado')
 
 fig, ax = plt.subplots(1, figsize=(14, 8))
