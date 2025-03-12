@@ -7,8 +7,8 @@ import geopandas as gpd
 
 # --- Configuração inicial ---
 URL = 'https://www.ipea.gov.br/atlasviolencia/'  # Site oficial do Atlas da Violência
-DRIVER_PATH = 'C:\Users\yukio\Downloads\chromedriver_win32'  # Substitua pelo caminho do seu ChromeDriver
-SHAPEFILE_PATH = 'C:\Users\yukio\Downloads\BR_Pais_2023'  # shapefile do Brasil
+DRIVER_PATH = '/caminho/do/seu/chromedriver'  # Substitua pelo caminho do seu ChromeDriver
+SHAPEFILE_PATH = '/caminho/BR_UF_2022.shp'  # Baixe o shapefile do Brasil no link abaixo
 
 # --- Função de scraping ---
 def scrape_crime_data():
