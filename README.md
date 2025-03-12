@@ -54,7 +54,6 @@ pip install -r requirements.txt
 Configure o caminho do ChromeDriver no código:
 
 ```
-python
 DRIVER_PATH = '/caminho/do/seu/chromedriver'
 ```
 
